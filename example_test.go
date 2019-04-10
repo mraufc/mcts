@@ -8,8 +8,7 @@ import (
 
 	"github.com/mraufc/mcts"
 	"github.com/mraufc/tictactoe/game"
-
-	_ "github.com/mraufc/tictactoe/player"
+	"github.com/mraufc/tictactoe/player"
 )
 
 // This example demonstrates 2 "AI" players backed with pure Monte Carlo Tree Search
@@ -88,8 +87,8 @@ func Example() {
 }
 
 type Worker struct {
-	p1     *Player
-	p2     *Player
+	p1     player.Player
+	p2     player.Player
 	en     *game.Engine
 	exit   <-chan int
 	work   <-chan int
@@ -105,13 +104,13 @@ func NewWorker(rows, columns, target int, searchDur time.Duration, exit, work <-
 	mg1 := &MoveGen{}
 
 	search1 := mcts.New(me1, mg1)
-
-	p1 := NewPlayer(search1, searchDur)
+	var p1, p2 player.Player
+	p1 = NewPlayer(search1, searchDur)
 	me2 := NewMoveEval(engine, rand.New(rand.NewSource(time.Now().UnixNano())))
 	mg2 := &MoveGen{}
 
 	search2 := mcts.New(me2, mg2)
-	p2 := NewPlayer(search2, searchDur)
+	p2 = NewPlayer(search2, searchDur)
 	return &Worker{
 		p1:     p1,
 		p2:     p2,
