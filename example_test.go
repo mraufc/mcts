@@ -8,6 +8,8 @@ import (
 
 	"github.com/mraufc/mcts"
 	"github.com/mraufc/tictactoe/game"
+
+	_ "github.com/mraufc/tictactoe/player"
 )
 
 // This example demonstrates 2 "AI" players backed with pure Monte Carlo Tree Search
